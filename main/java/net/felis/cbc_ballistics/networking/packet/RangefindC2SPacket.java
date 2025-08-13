@@ -38,7 +38,12 @@ public class RangefindC2SPacket {
                 ((RangefinderItem)thing).setResults(results);
             }
             RangefinderEntity ray = new RangefinderEntity(Minecraft.getInstance().level, results);
-            ray.shootFromRotation(player, player.getXRot(),player.getYRot(), 0.0f, 10f, 0.0f);
+            float pX = player.getXRot();
+            float pY = player.getYRot();
+            float f = -Mth.sin(pY * 0.017453292F) * Mth.cos(pX * 0.017453292F);
+            float f1 = -Mth.sin(pX * 0.017453292F);
+            float f2 = Mth.cos(pY * 0.017453292F) * Mth.cos(pX * 0.017453292F);
+            ray.shoot( f,f1, f2, 10f, 0.0f);
             ray.setPos(player.getX(), player.getEyeY() - Float.MIN_VALUE, player.getZ());
             ray.setOwner(player);
             level.addFreshEntity(ray);
@@ -46,3 +51,4 @@ public class RangefindC2SPacket {
         return true;
     }
 }
+
