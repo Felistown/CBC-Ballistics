@@ -73,8 +73,10 @@ public class RangefinderEntity extends Projectile {
         this.checkInsideBlocks();
         HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
         if (hitresult.getType() != HitResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, hitresult)) {
-            this.onHit(hitresult);
-            return true;
+            if(!(hitresult.getType() == HitResult.Type.ENTITY && ((EntityHitResult)hitresult).getEntity().equals(getOwner()))) {
+                this.onHit(hitresult);
+                return true;
+            }
         }
         Vec3 vec3 = this.getDeltaMovement();
         double d5 = vec3.x;
@@ -90,3 +92,4 @@ public class RangefinderEntity extends Projectile {
         return false;
     }
 }
+
