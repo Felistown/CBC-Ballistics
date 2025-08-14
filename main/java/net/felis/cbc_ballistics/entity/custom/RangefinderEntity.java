@@ -58,7 +58,7 @@ public class RangefinderEntity extends Projectile {
     public void tick() {
         super.tick();
         boolean hitBlock = false;
-        for(int i = 0; i < 500 && !hitBlock; i ++) {
+        for(int i = 0; i < 64 && !hitBlock; i ++) {
             hitBlock = subtick();
         }
         if(!hitBlock) {
@@ -92,4 +92,5 @@ public class RangefinderEntity extends Projectile {
         return false;
     }
 }
+
 
