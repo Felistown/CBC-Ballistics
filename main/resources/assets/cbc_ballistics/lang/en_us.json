@@ -34,6 +34,7 @@
   "key.category.cbc_ballistics.cbc_ballistics": "CBC Ballitics",
   "key.cbc_ballistics.rangefind" : "Rangefind",
   "tooltip.cbc_ballistics.rangefinder.results": "Coordinates: ",
-  "tooltip.cbc_ballistics.rangefinder.shift_down":"Hold down §eright click§r to scope in. Whilst scoping in, §eleft click§r to rangefind. Maximum range is 5 kilometres. Interact with Ballistic Calculator block with this in hand to input rangefinding results." ,
+  "tooltip.cbc_ballistics.rangefinder.shift_down": "Hold down §eright click§r to scope in. Whilst scoping in, §eleft click§r to rangefind. Maximum range is ~640blocks. Interact with Ballistic Calculator block with this in hand to input rangefinding results." ,
   "tooltip.cbc_ballistics.rangefinder": "Press §eShift§r for more information"
+
 }
