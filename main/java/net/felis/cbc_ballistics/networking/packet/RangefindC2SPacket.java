@@ -31,24 +31,25 @@ public class RangefindC2SPacket {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
-            ServerLevel level = (ServerLevel)player.level();
-            RangefinderResults results = new RangefinderResults();
-            Item thing = player.getUseItem().getItem();
-            if(thing == ModItems.RANGEFINDER.get()) {
-                ((RangefinderItem)thing).setResults(results);
+            ServerLevel level = (ServerLevel) player.level();
+            ItemStack thing = player.getUseItem();
+            if (thing.getItem() == ModItems.RANGEFINDER.get() && thing != null) {
+                thing.setTag(new CompoundTag());
+                thing.getTag().putString("results", "Rangefinding");
+                RangefinderEntity ray = new RangefinderEntity(level, thing.getTag());
+                float pX = player.getXRot();
+                float pY = player.getYRot();
+                float f = -Mth.sin(pY * 0.017453292F) * Mth.cos(pX * 0.017453292F);
+                float f1 = -Mth.sin(pX * 0.017453292F);
+                float f2 = Mth.cos(pY * 0.017453292F) * Mth.cos(pX * 0.017453292F);
+                ray.shoot(f, f1, f2, 10f, 0.0f);
+                ray.setPos(player.getX(), player.getEyeY() - Float.MIN_VALUE, player.getZ());
+                ray.setOwner(player);
+                level.addFreshEntity(ray);
             }
-            RangefinderEntity ray = new RangefinderEntity(Minecraft.getInstance().level, results);
-            float pX = player.getXRot();
-            float pY = player.getYRot();
-            float f = -Mth.sin(pY * 0.017453292F) * Mth.cos(pX * 0.017453292F);
-            float f1 = -Mth.sin(pX * 0.017453292F);
-            float f2 = Mth.cos(pY * 0.017453292F) * Mth.cos(pX * 0.017453292F);
-            ray.shoot( f,f1, f2, 10f, 0.0f);
-            ray.setPos(player.getX(), player.getEyeY() - Float.MIN_VALUE, player.getZ());
-            ray.setOwner(player);
-            level.addFreshEntity(ray);
         });
         return true;
     }
 }
+
 
