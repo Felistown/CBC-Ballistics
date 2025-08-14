@@ -1,9 +1,6 @@
 package net.felis.cbc_ballistics.item.custom;
 
-
-import net.felis.cbc_ballistics.util.RangefinderResults;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
@@ -20,12 +17,9 @@ import java.util.List;
 
 public class RangefinderItem extends Item {
 
-
-    private RangefinderResults results;
-
     public RangefinderItem(Properties pProperties) {
         super(pProperties);
-        results = null;
+
     }
 
     public int getUseDuration(ItemStack pStack) {
@@ -36,18 +30,9 @@ public class RangefinderItem extends Item {
         return UseAnim.SPYGLASS;
     }
 
-    public void setResults(RangefinderResults results) {
-        this.results = results;
-    }
-
-    public RangefinderResults getResults() {
-        return results;
-    }
-
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         pPlayer.playSound(SoundEvents.SPYGLASS_USE, 1.0F, 1.0F);
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
-        pPlayer.getMainHandItem().setTag(new CompoundTag());
         return ItemUtils.startUsingInstantly(pLevel, pPlayer, pUsedHand);
     }
 
@@ -55,9 +40,6 @@ public class RangefinderItem extends Item {
         this.stopUsing(pLivingEntity);
         return pStack;
     }
-
-
-
 
     public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeCharged) {
         this.stopUsing(pLivingEntity);
@@ -69,8 +51,8 @@ public class RangefinderItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        if(results != null) {
-            pTooltipComponents.add(Component.translatable("tooltip.cbc_ballistics.rangefinder.results").append(results.toString()));
+        if(pStack.getTag() != null) {
+            pTooltipComponents.add(Component.translatable("tooltip.cbc_ballistics.rangefinder.results").append(pStack.getTag().getString("results")));
         }
         if(Screen.hasShiftDown()) {
             pTooltipComponents.add(Component.translatable("tooltip.cbc_ballistics.rangefinder.shift_down"));

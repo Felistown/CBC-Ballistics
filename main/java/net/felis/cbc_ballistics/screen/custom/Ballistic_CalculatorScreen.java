@@ -2,13 +2,11 @@ package net.felis.cbc_ballistics.screen.custom;
 
 import net.felis.cbc_ballistics.CBS_Ballistics;
 import net.felis.cbc_ballistics.block.entity.CalculatorBlockEntity;
-import net.felis.cbc_ballistics.util.calculator.Cannon;
 import net.felis.cbc_ballistics.util.calculator.Projectile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.TextAndImageButton;
 import net.minecraft.client.gui.screens.Screen;
@@ -16,8 +14,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
+
 
 public class Ballistic_CalculatorScreen extends Screen {
 
@@ -56,7 +54,6 @@ public class Ballistic_CalculatorScreen extends Screen {
     private final int imageWidth;
     private CalculatorBlockEntity block;
     private final BlockPos pos;
-
 
     private EditBox cannonPos;
     private boolean cannonError;

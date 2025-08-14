@@ -9,7 +9,6 @@ import net.felis.cbc_ballistics.item.ModCreativeModTabs;
 import net.felis.cbc_ballistics.item.ModItems;
 import net.felis.cbc_ballistics.networking.ModMessages;
 import net.minecraft.client.renderer.entity.*;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -66,7 +65,6 @@ public class CBS_Ballistics
         event.enqueueWork(() -> {
             ModMessages.register();
         });
-
     }
 
     // Add the example block item to the building blocks tab

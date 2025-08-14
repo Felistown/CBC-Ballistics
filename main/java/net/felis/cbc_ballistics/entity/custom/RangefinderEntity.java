@@ -2,7 +2,8 @@ package net.felis.cbc_ballistics.entity.custom;
 
 
 import net.felis.cbc_ballistics.entity.ModEntities;
-import net.felis.cbc_ballistics.util.RangefinderResults;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -13,16 +14,16 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 public class RangefinderEntity extends Projectile {
 
-    private RangefinderResults results;
+    private CompoundTag tag;
 
     public RangefinderEntity(EntityType<? extends Projectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
 
     }
 
-    public RangefinderEntity(Level level, RangefinderResults results) {
+    public RangefinderEntity(Level level, CompoundTag tag) {
         super(ModEntities.RANGEFINDERENTITY.get(), level);
-        this.results = results;
+        this.tag = tag;
     }
 
 
@@ -30,8 +31,9 @@ public class RangefinderEntity extends Projectile {
     protected void onHitBlock(BlockHitResult pResult) {
         BlockState blockstate = this.level().getBlockState(pResult.getBlockPos());
         blockstate.onProjectileHit(this.level(), blockstate, pResult, this);
-        if(results != null) {
-            results.setResults(pResult.getBlockPos());
+        BlockPos pos = pResult.getBlockPos();
+        if(tag != null) {
+            tag.putString("results", "X = " + pos.getX() + ", Y =" + pos.getY() + ", Z =" + pos.getZ());
         }
         super.onHitBlock(pResult);
         this.discard();
@@ -39,11 +41,15 @@ public class RangefinderEntity extends Projectile {
 
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
-        if(results != null) {
-            if(pResult.getEntity().getType() == EntityType.CAT) {
-                results.cat();
+        if(tag != null) {
+            if (pResult.getEntity().getType() == EntityType.CAT) {
+                tag.putString("results", "Meow");
             } else {
-                results.setResults(pResult.getEntity().position());
+                Vec3 pos = pResult.getLocation();
+                int x = (int)Math.round(pos.x);
+                int y = (int)Math.round(pos.y);
+                int z = (int)Math.round(pos.z);
+                tag.putString("results", "X = " + x + ", Y =" + y + ", Z =" + z);
             }
         }
         super.onHitEntity(pResult);
@@ -62,10 +68,10 @@ public class RangefinderEntity extends Projectile {
             hitBlock = subtick();
         }
         if(!hitBlock) {
-            if(results != null) {
-                results.fail();
+            if(tag != null) {
+                tag.putString("results", "Too far");
+                this.discard();
             }
-            this.discard();
         }
     }
 
@@ -92,5 +98,3 @@ public class RangefinderEntity extends Projectile {
         return false;
     }
 }
-
-

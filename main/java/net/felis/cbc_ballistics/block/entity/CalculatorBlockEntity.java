@@ -178,8 +178,8 @@ public class CalculatorBlockEntity extends BlockEntity implements MenuProvider {
 
     public boolean setCannonPos(String cannonPos) {
         this.cannonPos = cannonPos;
+        setChanged();
         int[] array = new int[3];
-
         boolean result = tryLong(cannonPos, array);
         if(result) {
             cPos = array;
@@ -290,6 +290,7 @@ public class CalculatorBlockEntity extends BlockEntity implements MenuProvider {
 
     public boolean setTargetPos(String targetPos) {
         this.targetPos = targetPos;
+        setChanged();
         int[] array = new int[3];
         boolean result = tryLong(targetPos, array);
         if(result) {

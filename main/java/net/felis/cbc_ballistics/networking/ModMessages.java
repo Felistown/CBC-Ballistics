@@ -41,4 +41,3 @@ public class ModMessages {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
     }
 }
-

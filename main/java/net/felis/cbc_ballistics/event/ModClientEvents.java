@@ -13,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -69,13 +70,13 @@ public class ModClientEvents {
             graphics.fill(RenderType.guiOverlay(), 0, l, k, j1, -90, -16777216);
             graphics.fill(RenderType.guiOverlay(), i1, l, screenWidth, j1, -90, -16777216);
         }
-        Item item = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND).getItem();
+        ItemStack item = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND);
         if(Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == ModItems.RANGEFINDER.get() ) {
-            if(((RangefinderItem)item).getResults() != null) {
+            if(item.getTag() != null) {
                 GuiGraphics graphics = event.getGuiGraphics();
                 int x = graphics.guiWidth() / 2;
                 int y = (int)(graphics.guiHeight() * 0.75);
-                graphics.drawCenteredString(Minecraft.getInstance().font,((RangefinderItem)item).getResults().toString(), x, y, 16777215);
+                graphics.drawCenteredString(Minecraft.getInstance().font, item.getTag().getString("results"), x, y, 16777215);
             }
         }
     }

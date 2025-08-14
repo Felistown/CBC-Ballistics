@@ -2,14 +2,13 @@ package net.felis.cbc_ballistics.block.custom;
 
 import net.felis.cbc_ballistics.block.entity.CalculatorBlockEntity;
 import net.felis.cbc_ballistics.item.ModItems;
-import net.felis.cbc_ballistics.item.custom.RangefinderItem;
 import net.felis.cbc_ballistics.screen.ClientHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -26,12 +25,10 @@ import org.jetbrains.annotations.Nullable;
 public class CalculatorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING;
 
-
     public CalculatorBlock(Properties pProperties) {
         super(pProperties);
         this.registerDefaultState((BlockState)((BlockState)((BlockState)this.stateDefinition.any()).setValue(FACING, Direction.NORTH)));
     }
-
 
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return (BlockState)this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
@@ -53,6 +50,7 @@ public class CalculatorBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+
         return new CalculatorBlockEntity(blockPos, blockState);
     }
 
@@ -61,9 +59,9 @@ public class CalculatorBlock extends BaseEntityBlock {
         if (pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
             if (entity instanceof CalculatorBlockEntity) {
-                Item item = pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem();
-                if (item == ModItems.RANGEFINDER.get() && ((RangefinderItem) item).getResults() != null) {
-                    ((CalculatorBlockEntity) entity).setTargetPos(((RangefinderItem) item).getResults().toString());
+                ItemStack item = pPlayer.getItemInHand(InteractionHand.MAIN_HAND);
+                if (item.getItem() == ModItems.RANGEFINDER.get() && item.getTag() != null) {
+                    ((CalculatorBlockEntity) entity).setTargetPos(item.getTag().getString("results"));
                 }
                 DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientHooks.openBallisticCalculatorScreen(pPos));
                 return InteractionResult.SUCCESS;

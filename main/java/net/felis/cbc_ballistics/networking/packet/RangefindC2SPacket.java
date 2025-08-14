@@ -2,13 +2,12 @@ package net.felis.cbc_ballistics.networking.packet;
 
 import net.felis.cbc_ballistics.entity.custom.RangefinderEntity;
 import net.felis.cbc_ballistics.item.ModItems;
-import net.felis.cbc_ballistics.item.custom.RangefinderItem;
-import net.felis.cbc_ballistics.util.RangefinderResults;
-import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.Item;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -24,7 +23,6 @@ public class RangefindC2SPacket {
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
@@ -51,5 +49,3 @@ public class RangefindC2SPacket {
         return true;
     }
 }
-
-
